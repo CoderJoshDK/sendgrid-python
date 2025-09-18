@@ -7,7 +7,7 @@ from sendgrid import *
 
 # Assumes you set your environment variable:
 # See: https://github.com/sendgrid/sendgrid-python/blob/HEAD/TROUBLESHOOTING.md#environment-variables-and-your-sendgrid-api-key
-sg = SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
+sg = SendGridAPIClient(os.environ.get("SENDGRID_API_KEY"))
 
 
 def pprint_json(json_raw):
@@ -16,14 +16,14 @@ def pprint_json(json_raw):
 
 def build_global_stats():
     global_stats = Stats()
-    global_stats.start_date = '2017-10-14'
-    global_stats.end_date = '2017-10-20'
-    global_stats.aggregated_by = 'day'
+    global_stats.start_date = "2017-10-14"
+    global_stats.end_date = "2017-10-20"
+    global_stats.aggregated_by = "day"
     return global_stats.get()
 
 
 def build_category_stats():
-    category_stats = CategoryStats('2017-10-15', ['foo', 'bar'])
+    category_stats = CategoryStats("2017-10-15", ["foo", "bar"])
     # category_stats.start_date = '2017-10-15'
     # category_stats.add_category(Category("foo"))
     # category_stats.add_category(Category("bar"))
@@ -32,14 +32,14 @@ def build_category_stats():
 
 def build_category_stats_sums():
     category_stats = CategoryStats()
-    category_stats.start_date = '2017-10-15'
+    category_stats.start_date = "2017-10-15"
     category_stats.limit = 5
     category_stats.offset = 1
     return category_stats.get()
 
 
 def build_subuser_stats():
-    subuser_stats = SubuserStats('2017-10-20', ['aaronmakks','foo'])
+    subuser_stats = SubuserStats("2017-10-20", ["aaronmakks", "foo"])
     # subuser_stats.start_date = '2017-10-15'
     # subuser_stats.add_subuser(Subuser("foo"))
     # subuser_stats.add_subuser(Subuser("bar"))
@@ -48,7 +48,7 @@ def build_subuser_stats():
 
 def build_subuser_stats_sums():
     subuser_stats = SubuserStats()
-    subuser_stats.start_date = '2017-10-15'
+    subuser_stats.start_date = "2017-10-15"
     subuser_stats.limit = 5
     subuser_stats.offset = 1
     return subuser_stats.get()

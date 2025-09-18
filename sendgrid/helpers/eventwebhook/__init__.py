@@ -5,6 +5,7 @@ from cryptography.hazmat.primitives.serialization import load_pem_public_key
 import base64
 from .eventwebhook_header import EventWebhookHeader
 
+
 class EventWebhook:
     """
     This class allows you to use the Event Webhook feature. Read the docs for
@@ -45,7 +46,7 @@ class EventWebhook:
         :type public_key: cryptography.hazmat.primitives.asymmetric.ec.EllipticCurvePublicKey
         :return: true or false if signature is valid
         """
-        timestamped_payload = (timestamp + payload).encode('utf-8')
+        timestamped_payload = (timestamp + payload).encode("utf-8")
         decoded_signature = base64.b64decode(signature)
 
         key = public_key or self.public_key

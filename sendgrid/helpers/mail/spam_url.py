@@ -1,6 +1,6 @@
 class SpamUrl(object):
     """An Inbound Parse URL that you would like a copy of your email
-       along with the spam report to be sent to."""
+    along with the spam report to be sent to."""
 
     def __init__(self, spam_url=None):
         """Create a SpamUrl object

@@ -2,7 +2,7 @@ import json
 
 from sendgrid.helpers.endpoints.ip.unassigned import unassigned
 
-ret_json = '''[ {
+ret_json = """[ {
 	"ip": "167.89.21.3",
         "pools": [
 		"pool1",
@@ -51,7 +51,7 @@ ret_json = '''[ {
         "assigned_at": 1482883200
 
       } ]
-      '''
+      """
 
 
 def get_all_ip():

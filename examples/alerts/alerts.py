@@ -2,17 +2,13 @@ import sendgrid
 import os
 
 
-sg = sendgrid.SendGridAPIClient(os.environ.get('SENDGRID_API_KEY'))
+sg = sendgrid.SendGridAPIClient(os.environ.get("SENDGRID_API_KEY"))
 
 ##################################################
 # Create a new Alert #
 # POST /alerts #
 
-data = {
-    "email_to": "example@example.com",
-    "frequency": "daily",
-    "type": "stats_notification"
-}
+data = {"email_to": "example@example.com", "frequency": "daily", "type": "stats_notification"}
 response = sg.client.alerts.post(request_body=data)
 print(response.status_code)
 print(response.body)
@@ -31,9 +27,7 @@ print(response.headers)
 # Update an alert #
 # PATCH /alerts/{alert_id} #
 
-data = {
-    "email_to": "example@example.com"
-}
+data = {"email_to": "example@example.com"}
 alert_id = "test_url_param"
 response = sg.client.alerts._(alert_id).patch(request_body=data)
 print(response.status_code)

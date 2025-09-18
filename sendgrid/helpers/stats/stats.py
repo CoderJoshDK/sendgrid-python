@@ -2,8 +2,8 @@ class Stats(object):
     """
     Object for building query params for a global email statistics request
     """
-    def __init__(
-            self, start_date=None):
+
+    def __init__(self, start_date=None):
         """Create a Stats object
 
         :param start_date: Date of when stats should begin in YYYY-MM-DD format, defaults to None
@@ -57,7 +57,7 @@ class Stats(object):
         """Date of when stats should begin in YYYY-MM-DD format
 
         :rtype: string
-        """        
+        """
         return self._start_date
 
     @start_date.setter
@@ -74,7 +74,7 @@ class Stats(object):
         """Date of when stats should end in YYYY-MM-DD format
 
         :rtype: string
-        """  
+        """
         return self._end_date
 
     @end_date.setter
@@ -91,7 +91,7 @@ class Stats(object):
         """Chosen period (e.g. 'day', 'week', 'month') for how stats get grouped
 
         :rtype: string
-        """        
+        """
         return self._aggregated_by
 
     @aggregated_by.setter
@@ -100,7 +100,7 @@ class Stats(object):
 
         :param value: Period for how keys will get formatted
         :type value: string
-        """        
+        """
         self._aggregated_by = value
 
     @property
@@ -108,7 +108,7 @@ class Stats(object):
         """Metric to sort stats by
 
         :rtype: string
-        """        
+        """
         return self._sort_by_metric
 
     @sort_by_metric.setter
@@ -117,7 +117,7 @@ class Stats(object):
 
         :param value: Chosen metric stats will by sorted by
         :type value: string
-        """        
+        """
         self._sort_by_metric = value
 
     @property
@@ -125,7 +125,7 @@ class Stats(object):
         """Direction data will be sorted, either 'asc' or 'desc'
 
         :rtype: string
-        """        
+        """
         return self._sort_by_direction
 
     @sort_by_direction.setter
@@ -134,7 +134,7 @@ class Stats(object):
 
         :param value: Direction of data, either 'asc' or 'desc'
         :type value: string
-        """        
+        """
         self._sort_by_direction = value
 
     @property
@@ -142,7 +142,7 @@ class Stats(object):
         """Max amount of results to be returned
 
         :rtype: int
-        """        
+        """
         return self._limit
 
     @limit.setter
@@ -151,7 +151,7 @@ class Stats(object):
 
         :param value: Max amount of results
         :type value: int
-        """        
+        """
         self._limit = value
 
     @property
@@ -159,7 +159,7 @@ class Stats(object):
         """Number of places a starting point of a data set will move
 
         :rtype: int
-        """        
+        """
         return self._offset
 
     @offset.setter
@@ -168,7 +168,7 @@ class Stats(object):
 
         :param value: Number of positions to move from starting point
         :type value: int
-        """        
+        """
         self._offset = value
 
 
@@ -176,6 +176,7 @@ class CategoryStats(Stats):
     """
     object for building query params for a category statistics request
     """
+
     def __init__(self, start_date=None, categories=None):
         """Create a CategoryStats object
 
@@ -183,7 +184,7 @@ class CategoryStats(Stats):
         :type start_date: string, optional
         :param categories: list of categories to get results of, defaults to None
         :type categories: list(string), optional
-        """        
+        """
         self._categories = None
         super(CategoryStats, self).__init__()
 
@@ -215,8 +216,7 @@ class CategoryStats(Stats):
         if self.offset is not None:
             stats["offset"] = self.offset
         if self.categories is not None:
-            stats['categories'] = [category.get() for category in
-                                   self.categories]
+            stats["categories"] = [category.get() for category in self.categories]
         return stats
 
     @property
@@ -224,7 +224,7 @@ class CategoryStats(Stats):
         """List of categories
 
         :rtype: list(Category)
-        """        
+        """
         return self._categories
 
     def add_category(self, category):
@@ -241,7 +241,8 @@ class CategoryStats(Stats):
 class SubuserStats(Stats):
     """
     object of building query params for a subuser statistics request
-    """    
+    """
+
     def __init__(self, start_date=None, subusers=None):
         """Create a SubuserStats object
 
@@ -249,7 +250,7 @@ class SubuserStats(Stats):
         :type start_date: string, optional
         :param subusers: list of subusers to get results of, defaults to None
         :type subusers: list(string), optional
-        """        
+        """
         self._subusers = None
         super(SubuserStats, self).__init__()
 
@@ -281,8 +282,7 @@ class SubuserStats(Stats):
         if self.offset is not None:
             stats["offset"] = self.offset
         if self.subusers is not None:
-            stats['subusers'] = [subuser.get() for subuser in
-                                 self.subusers]
+            stats["subusers"] = [subuser.get() for subuser in self.subusers]
         return stats
 
     @property
@@ -308,12 +308,13 @@ class Category(object):
     """
     Represents a searchable statistics category to be used in a CategoryStats object
     """
+
     def __init__(self, name=None):
         """Create a Category object
 
         :param name: name of category, defaults to None
         :type name: string, optional
-        """        
+        """
         self._name = None
         if name is not None:
             self._name = name
@@ -332,7 +333,7 @@ class Category(object):
 
         :param value: name of the statistical category
         :type value: string
-        """        
+        """
         self._name = value
 
     def get(self):
@@ -347,13 +348,14 @@ class Category(object):
 class Subuser(object):
     """
     Represents a searchable subuser to be used in a SubuserStats object
-    """    
+    """
+
     def __init__(self, name=None):
         """Create a Subuser object
 
         :param name: name of subuser, defaults to None
         :type name: string, optional
-        """        
+        """
         self._name = None
         if name is not None:
             self._name = name
@@ -363,7 +365,7 @@ class Subuser(object):
         """Get name of the subuser
 
         :rtype: string
-        """        
+        """
         return self._name
 
     @name.setter
@@ -372,7 +374,7 @@ class Subuser(object):
 
         :param value: name of the subuser
         :type value: string
-        """        
+        """
         self._name = value
 
     def get(self):

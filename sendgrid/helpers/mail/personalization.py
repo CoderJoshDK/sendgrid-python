@@ -18,33 +18,30 @@ class Personalization(object):
 
     def add_email(self, email):
         email_type = type(email)
-        if email_type.__name__ == 'To':
+        if email_type.__name__ == "To":
             self.add_to(email)
             return
-        if email_type.__name__ == 'Cc':
+        if email_type.__name__ == "Cc":
             self.add_cc(email)
             return
-        if email_type.__name__ == 'Bcc':
+        if email_type.__name__ == "Bcc":
             self.add_bcc(email)
             return
-        if email_type.__name__ == 'From':
+        if email_type.__name__ == "From":
             self.from_email = email
             return
-        raise ValueError('Please use a To, From, Cc or Bcc object.')
-    
+        raise ValueError("Please use a To, From, Cc or Bcc object.")
+
     def _get_unique_recipients(self, recipients):
         unique_recipients = []
 
         for recipient in recipients:
-            recipient_email = recipient['email'].lower() if isinstance(recipient, dict) else recipient.email.lower()
-            if all(
-                unique_recipient['email'].lower() != recipient_email for unique_recipient in unique_recipients
-            ):
+            recipient_email = recipient["email"].lower() if isinstance(recipient, dict) else recipient.email.lower()
+            if all(unique_recipient["email"].lower() != recipient_email for unique_recipient in unique_recipients):
                 new_unique_recipient = recipient if isinstance(recipient, dict) else recipient.get()
                 unique_recipients.append(new_unique_recipient)
 
         return unique_recipients
-
 
     @property
     def tos(self):
@@ -246,21 +243,21 @@ class Personalization(object):
         """
         personalization = {}
 
-        for key in ['tos', 'ccs', 'bccs']:
+        for key in ["tos", "ccs", "bccs"]:
             value = getattr(self, key)
             if value:
                 personalization[key[:-1]] = value
 
-        from_value = getattr(self, 'from_email')
+        from_value = getattr(self, "from_email")
         if from_value:
-            personalization['from'] = from_value
+            personalization["from"] = from_value
 
-        for key in ['subject', 'send_at', 'dynamic_template_data']:
+        for key in ["subject", "send_at", "dynamic_template_data"]:
             value = getattr(self, key)
             if value:
                 personalization[key] = value
 
-        for prop_name in ['headers', 'substitutions', 'custom_args']:
+        for prop_name in ["headers", "substitutions", "custom_args"]:
             prop = getattr(self, prop_name)
             if prop:
                 obj = {}

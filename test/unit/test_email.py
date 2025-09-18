@@ -1,11 +1,10 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-from sendgrid.helpers.mail import (Email)
+from sendgrid.helpers.mail import Email
 
 
 class TestEmailObject(unittest.TestCase):
-
     def test_add_email_address(self):
         address = "test@example.com"
         email = Email(address)
@@ -19,7 +18,7 @@ class TestEmailObject(unittest.TestCase):
         self.assertEqual(email.name, name)
 
     def test_add_unicode_name(self):
-        name = u"SomeName"
+        name = "SomeName"
         email = Email(name=name)
 
         self.assertEqual(email.name, name)
@@ -32,11 +31,11 @@ class TestEmailObject(unittest.TestCase):
         self.assertEqual(email.email, "test@example.com")
 
     def test_add_unicode_name_email(self):
-        name = u"SomeName"
-        address = u"test@example.com"
+        name = "SomeName"
+        address = "test@example.com"
         email = Email(email=address, name=name)
         self.assertEqual(email.name, name)
-        self.assertEqual(email.email, u"test@example.com")
+        self.assertEqual(email.email, "test@example.com")
 
     def test_add_rfc_function_finds_name_not_email(self):
         name = "SomeName"

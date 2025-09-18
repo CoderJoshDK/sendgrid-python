@@ -10,6 +10,7 @@ For the user guide, code examples, and more, visit the main docs page:
 
 This file provides the Twilio Email API Client.
 """
+
 import os
 from base64 import b64encode
 
@@ -30,12 +31,7 @@ class TwilioEmailAPIClient(BaseInterface):
         https://github.com/sendgrid/sendgrid-python
     """
 
-    def __init__(
-            self,
-            username=None,
-            password=None,
-            host='https://email.twilio.com',
-            impersonate_subuser=None):
+    def __init__(self, username=None, password=None, host="https://email.twilio.com", impersonate_subuser=None):
         """
         Construct the Twilio Email v3 API object.
         Note that the underlying client is being set up during initialization,
@@ -60,14 +56,10 @@ class TwilioEmailAPIClient(BaseInterface):
         :param host: base URL for API calls
         :type host: string
         """
-        self.username = username or \
-                        os.environ.get('TWILIO_API_KEY') or \
-                        os.environ.get('TWILIO_ACCOUNT_SID')
+        self.username = username or os.environ.get("TWILIO_API_KEY") or os.environ.get("TWILIO_ACCOUNT_SID")
 
-        self.password = password or \
-                        os.environ.get('TWILIO_API_SECRET') or \
-                        os.environ.get('TWILIO_AUTH_TOKEN')
+        self.password = password or os.environ.get("TWILIO_API_SECRET") or os.environ.get("TWILIO_AUTH_TOKEN")
 
-        auth = 'Basic ' + b64encode('{}:{}'.format(self.username, self.password).encode()).decode()
+        auth = "Basic " + b64encode("{}:{}".format(self.username, self.password).encode()).decode()
 
         super(TwilioEmailAPIClient, self).__init__(auth, host, impersonate_subuser)

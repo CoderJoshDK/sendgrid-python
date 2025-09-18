@@ -8,13 +8,7 @@ from .content_id import ContentId
 class Attachment(object):
     """An attachment to be included with an email."""
 
-    def __init__(
-            self,
-            file_content=None,
-            file_name=None,
-            file_type=None,
-            disposition=None,
-            content_id=None):
+    def __init__(self, file_content=None, file_name=None, file_type=None, disposition=None, content_id=None):
         """Create an Attachment
 
         :param file_content: The Base64 encoded content of the attachment

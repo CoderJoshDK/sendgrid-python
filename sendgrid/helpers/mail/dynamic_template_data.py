@@ -1,6 +1,6 @@
 class DynamicTemplateData(object):
     """To send a dynamic template, specify the template ID with the
-       template_id parameter.
+    template_id parameter.
     """
 
     def __init__(self, dynamic_template_data=None, p=0):

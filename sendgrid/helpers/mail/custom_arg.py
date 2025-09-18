@@ -10,13 +10,13 @@ class CustomArg(object):
     def __init__(self, key=None, value=None, p=None):
         """Create a CustomArg with the given key and value.
 
-            :param key: Key for this CustomArg
-            :type key: string, optional
-            :param value: Value of this CustomArg
-            :type value: string, optional
-            :param p: p is the Personalization object or Personalization
-                      object index
-            :type p: Personalization, integer, optional
+        :param key: Key for this CustomArg
+        :type key: string, optional
+        :param value: Value of this CustomArg
+        :type value: string, optional
+        :param p: p is the Personalization object or Personalization
+                  object index
+        :type p: Personalization, integer, optional
         """
         self._key = None
         self._value = None

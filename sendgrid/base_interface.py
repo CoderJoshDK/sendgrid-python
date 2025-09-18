@@ -1,6 +1,7 @@
 import python_http_client
 
-region_host_dict = {'eu':'https://api.eu.sendgrid.com','global':'https://api.sendgrid.com'}
+region_host_dict = {"eu": "https://api.eu.sendgrid.com", "global": "https://api.sendgrid.com"}
+
 
 class BaseInterface(object):
     def __init__(self, auth, host, impersonate_subuser):
@@ -22,27 +23,21 @@ class BaseInterface(object):
         :type host: string
         """
         from . import __version__
+
         self.auth = auth
         self.impersonate_subuser = impersonate_subuser
         self.version = __version__
-        self.useragent = 'sendgrid/{};python'.format(self.version)
+        self.useragent = "sendgrid/{};python".format(self.version)
         self.host = host
 
-        self.client = python_http_client.Client(
-            host=self.host,
-            request_headers=self._default_headers,
-            version=3)
+        self.client = python_http_client.Client(host=self.host, request_headers=self._default_headers, version=3)
 
     @property
     def _default_headers(self):
         """Set the default header for a Twilio SendGrid v3 API call"""
-        headers = {
-            "Authorization": self.auth,
-            "User-Agent": self.useragent,
-            "Accept": 'application/json'
-        }
+        headers = {"Authorization": self.auth, "User-Agent": self.useragent, "Accept": "application/json"}
         if self.impersonate_subuser:
-            headers['On-Behalf-Of'] = self.impersonate_subuser
+            headers["On-Behalf-Of"] = self.impersonate_subuser
 
         return headers
 
@@ -75,9 +70,6 @@ class BaseInterface(object):
         if region in region_host_dict.keys():
             self.host = region_host_dict[region]
             if self._default_headers is not None:
-                self.client = python_http_client.Client(
-                    host=self.host,
-                    request_headers=self._default_headers,
-                    version=3)
+                self.client = python_http_client.Client(host=self.host, request_headers=self._default_headers, version=3)
         else:
-            raise ValueError("region can only be \"eu\" or \"global\"")
+            raise ValueError('region can only be "eu" or "global"')

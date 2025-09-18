@@ -1,7 +1,7 @@
 class SpamThreshold(object):
     """The threshold used to determine if your content qualifies as spam
-       on a scale from 1 to 10, with 10 being most strict, or most likely
-       to be considered as spam."""
+    on a scale from 1 to 10, with 10 being most strict, or most likely
+    to be considered as spam."""
 
     def __init__(self, spam_threshold=None):
         """Create a SpamThreshold object

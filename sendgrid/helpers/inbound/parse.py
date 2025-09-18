@@ -1,4 +1,5 @@
 """Parse data received from the SendGrid Inbound Parse webhook"""
+
 import base64
 import email
 import mimetypes
@@ -7,7 +8,6 @@ from werkzeug.utils import secure_filename
 
 
 class Parse(object):
-
     def __init__(self, config, request):
         self._keys = config.keys
         self._request = request
@@ -31,8 +31,8 @@ class Parse(object):
         This only applies to raw payloads:
         https://sendgrid.com/docs/Classroom/Basics/Inbound_Parse_Webhook/setting_up_the_inbound_parse_webhook.html#-Raw-Parameters
         """
-        if 'email' in self.payload:
-            raw_email = email.message_from_string(self.payload['email'])
+        if "email" in self.payload:
+            raw_email = email.message_from_string(self.payload["email"])
             return raw_email
         else:
             return None
@@ -43,7 +43,7 @@ class Parse(object):
         file_name = the name of the file
         contents = base64 encoded file contents"""
         attachments = None
-        if 'attachment-info' in self.payload:
+        if "attachment-info" in self.payload:
             attachments = self._get_attachments(self.request)
         # Check if we have a raw message
         raw_email = self.get_raw_email()
@@ -55,11 +55,11 @@ class Parse(object):
         attachments = []
         for _, filestorage in iteritems(request.files):
             attachment = {}
-            if filestorage.filename not in (None, 'fdopen', '<fdopen>'):
+            if filestorage.filename not in (None, "fdopen", "<fdopen>"):
                 filename = secure_filename(filestorage.filename)
-                attachment['type'] = filestorage.content_type
-                attachment['file_name'] = filename
-                attachment['contents'] = base64.b64encode(filestorage.read())
+                attachment["type"] = filestorage.content_type
+                attachment["file_name"] = filename
+                attachment["contents"] = base64.b64encode(filestorage.read())
                 attachments.append(attachment)
         return attachments
 
@@ -68,18 +68,18 @@ class Parse(object):
         counter = 1
         for part in raw_email.walk():
             attachment = {}
-            if part.get_content_maintype() == 'multipart':
+            if part.get_content_maintype() == "multipart":
                 continue
             filename = part.get_filename()
             if not filename:
                 ext = mimetypes.guess_extension(part.get_content_type())
                 if not ext:
-                    ext = '.bin'
-                filename = 'part-%03d%s' % (counter, ext)
+                    ext = ".bin"
+                filename = "part-%03d%s" % (counter, ext)
             counter += 1
-            attachment['type'] = part.get_content_type()
-            attachment['file_name'] = filename
-            attachment['contents'] = part.get_payload(decode=False)
+            attachment["type"] = part.get_content_type()
+            attachment["file_name"] = filename
+            attachment["contents"] = part.get_payload(decode=False)
             attachments.append(attachment)
         return attachments
 

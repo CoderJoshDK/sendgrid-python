@@ -3,8 +3,7 @@ from .validators import ValidateApiKey
 
 
 class PlainTextContent(Content):
-    """Plain text content to be included in your email.
-    """
+    """Plain text content to be included in your email."""
 
     def __init__(self, content):
         """Create a PlainTextContent with the specified MIME type and content.

@@ -6,7 +6,7 @@ from sendgrid import Email, To, Content, Mail
 # Example 1
 # setting region to be "global"
 
-sg = sendgrid.SendGridAPIClient(api_key=os.environ.get('SENDGRID_API_KEY'))
+sg = sendgrid.SendGridAPIClient(api_key=os.environ.get("SENDGRID_API_KEY"))
 from_email = Email("example@abc.com")
 to_email = To("example@abc.com")
 subject = "Sending with SendGrid is Fun"
@@ -22,7 +22,7 @@ print(response.headers)
 
 # Example 2
 # setting region to "eu"
-sg = sendgrid.SendGridAPIClient(api_key=os.environ.get('SENDGRID_API_KEY_EU'))
+sg = sendgrid.SendGridAPIClient(api_key=os.environ.get("SENDGRID_API_KEY_EU"))
 sg.set_sendgrid_data_residency("eu")
 from_email = Email("example@abc.com")
 to_email = To("example@abc.com")
