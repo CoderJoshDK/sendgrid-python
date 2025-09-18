@@ -1,20 +1,17 @@
 .PHONY: venv install test-install test test-integ test-docker clean nopyc
 
 venv: clean
-	@python --version || (echo "Python is not installed, please install Python 3"; exit 1);
-	pip install virtualenv
-	virtualenv --python=python venv
+	@uv --version || (echo "uv is not installed, please install uv"; exit 1);
+	uv venv --clear
 
 install: venv
-	. venv/bin/activate; pip install -r test/requirements.txt
-	. venv/bin/activate; python setup.py install
-	. venv/bin/activate; pip install -r requirements.txt
+	uv sync --locked --all-extras --dev --group test
 
 test: install
-	. venv/bin/activate; coverage run -m unittest discover -s test/unit
+	uv run coverage run -m unittest discover -s test/unit
 
 test-integ: test
-	. venv/bin/activate; coverage run -m unittest discover -s test/integ
+	uv run coverage run -m unittest discover -s test/integ
 
 version ?= latest
 test-docker:
