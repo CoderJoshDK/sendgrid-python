@@ -13,7 +13,6 @@ from .personalization import Personalization
 from .reply_to import ReplyTo
 from .send_at import SendAt
 from .subject import Subject
-from .substitution import Substitution
 from .template_id import TemplateId
 from .to_email import To
 
@@ -112,7 +111,6 @@ class Mail(object):
         :param dicts: Flatten a dict
         :type dicts: list(dict)
         """
-        d = dict()
         list_of_dicts = [d.get() for d in dicts or []]
         return {k: v for d in list_of_dicts for k, v in d.items()}
 

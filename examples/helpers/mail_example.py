@@ -134,9 +134,6 @@ def build_kitchen_sink():
         Cc,
         Bcc,
         Subject,
-        PlainTextContent,
-        HtmlContent,
-        SendGridException,
         Substitution,
         Header,
         CustomArg,
@@ -160,7 +157,6 @@ def build_kitchen_sink():
         IpPoolName,
         MailSettings,
         BccSettings,
-        BccSettingsEmail,
         BypassListManagement,
         FooterSettings,
         FooterText,
@@ -184,8 +180,6 @@ def build_kitchen_sink():
         UtmContent,
         UtmCampaign,
     )
-    import time
-    import datetime
 
     message = Mail()
 

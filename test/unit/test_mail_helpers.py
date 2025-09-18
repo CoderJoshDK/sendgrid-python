@@ -336,7 +336,7 @@ class UnitTests(unittest.TestCase):
         self.assertEqual(message.get(), json.loads(response_content_with_all_three_mime_contents))
 
     def test_single_email_with_amp_and_html_contents_to_single_recipient(self):
-        from sendgrid.helpers.mail import Mail, From, To, Subject, PlainTextContent, HtmlContent, AmpHtmlContent
+        from sendgrid.helpers.mail import Mail, From, To, Subject, HtmlContent, AmpHtmlContent
 
         self.maxDiff = None
         message = Mail(
@@ -354,7 +354,7 @@ class UnitTests(unittest.TestCase):
         self.assertEqual(message.get(), json.loads(response_content))
 
     def test_single_email_with_amp_and_plain_contents_to_single_recipient(self):
-        from sendgrid.helpers.mail import Mail, From, To, Subject, PlainTextContent, HtmlContent, AmpHtmlContent
+        from sendgrid.helpers.mail import Mail, From, To, Subject, PlainTextContent, AmpHtmlContent
 
         self.maxDiff = None
         message = Mail(
