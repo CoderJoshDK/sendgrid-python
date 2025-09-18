@@ -1,9 +1,6 @@
-from sendgrid.helpers.mail.spam_check import SpamCheck
+import unittest
 
-try:
-    import unittest2 as unittest
-except ImportError:
-    import unittest
+from sendgrid.helpers.mail.spam_check import SpamCheck
 
 
 class UnitTests(unittest.TestCase):

@@ -2,15 +2,7 @@
 import json
 import unittest
 
-try:
-    from email.message import EmailMessage
-except ImportError:
-    # Python2
-    from email import message
-
-    EmailMessage = message.Message
-
-from sendgrid.helpers.mail import Asm, Attachment, ClickTracking, Content, DynamicTemplateData, Email, From, Mail, Personalization, Subject, Substitution, To, Cc, Bcc, TrackingSettings
+from sendgrid.helpers.mail import Asm, Attachment, Bcc, Cc, ClickTracking, Content, DynamicTemplateData, Email, From, Mail, Personalization, Subject, Substitution, To, TrackingSettings
 
 # The below amp html email content is taken from [Google AMP Hello World Email](https://amp.dev/documentation/examples/introduction/hello_world_email/)
 amp_html_content = """<!doctype html><html amp4email><head><meta charset="utf-8"><script async src="https://cdn.ampproject.org/v0.js"></script><style amp4email-boilerplate>body{visibility:hidden}</style><script async custom-element="amp-carousel" src="https://cdn.ampproject.org/v0/amp-carousel-0.1.js"></script><style amp-custom>.emailbody {padding: 16px;}.helloworld {font-family: Helvetica;color: red;font-size: 24px;padding-bottom: 8px;}.images {max-width: 100%;}</style></head><body><div class="emailbody"><h1 class="helloworld">Hello!</h1><amp-img src="https://amp.dev/static/samples/img/amp.jpg" width="800" height="600" layout="responsive"></amp-img></div></body></html>"""
@@ -35,7 +27,7 @@ class UnitTests(unittest.TestCase):
         self.assertEqual(asm1.groups_to_display.get(), asm2.groups_to_display.get())
 
     def test_attachment(self):
-        from sendgrid.helpers.mail import FileContent, FileType, FileName, Disposition, ContentId
+        from sendgrid.helpers.mail import ContentId, Disposition, FileContent, FileName, FileType
 
         a1 = Attachment(FileContent("Base64EncodedString"), FileName("example.pdf"), FileType("application/pdf"), Disposition("attachment"), ContentId("123"))
         a2 = Attachment("Base64EncodedString", "example.pdf", "application/pdf", "attachment", "123")
@@ -53,7 +45,7 @@ class UnitTests(unittest.TestCase):
 
     # Send a Single Email to a Single Recipient
     def test_single_email_to_a_single_recipient(self):
-        from sendgrid.helpers.mail import Mail, From, To, Subject, PlainTextContent, HtmlContent
+        from sendgrid.helpers.mail import From, HtmlContent, Mail, PlainTextContent, Subject, To
 
         self.maxDiff = None
         message = Mail(
@@ -97,7 +89,7 @@ class UnitTests(unittest.TestCase):
 
     def test_single_email_to_a_single_recipient_content_reversed(self):
         """Tests bug found in Issue-451 with Content ordering causing a crash"""
-        from sendgrid.helpers.mail import Mail, From, To, Subject, PlainTextContent, HtmlContent
+        from sendgrid.helpers.mail import From, HtmlContent, Mail, PlainTextContent, Subject, To
 
         self.maxDiff = None
         message = Mail()
@@ -139,7 +131,7 @@ class UnitTests(unittest.TestCase):
         )
 
     def test_send_a_single_email_to_multiple_recipients(self):
-        from sendgrid.helpers.mail import Mail, From, To, Subject, PlainTextContent, HtmlContent
+        from sendgrid.helpers.mail import From, HtmlContent, Mail, PlainTextContent, Subject, To
 
         self.maxDiff = None
         to_emails = [To("test+to0@example.com", "Example To Name 0"), To("test+to1@example.com", "Example To Name 1")]
@@ -183,7 +175,7 @@ class UnitTests(unittest.TestCase):
         )
 
     def test_send_a_single_email_with_multiple_reply_to_addresses(self):
-        from sendgrid.helpers.mail import Mail, From, ReplyTo, To, Subject, PlainTextContent, HtmlContent
+        from sendgrid.helpers.mail import From, HtmlContent, Mail, PlainTextContent, ReplyTo, Subject, To
 
         self.maxDiff = None
         message = Mail(
@@ -236,7 +228,7 @@ class UnitTests(unittest.TestCase):
         )
 
     def test_multiple_emails_to_multiple_recipients(self):
-        from sendgrid.helpers.mail import Mail, From, To, Subject, PlainTextContent, HtmlContent, Substitution
+        from sendgrid.helpers.mail import From, HtmlContent, Mail, PlainTextContent, Subject, Substitution, To
 
         self.maxDiff = None
 
@@ -321,7 +313,7 @@ class UnitTests(unittest.TestCase):
         )
 
     def test_single_email_with_all_three_email_contents_to_single_recipient(self):
-        from sendgrid.helpers.mail import Mail, From, To, Subject, PlainTextContent, HtmlContent, AmpHtmlContent
+        from sendgrid.helpers.mail import AmpHtmlContent, From, HtmlContent, Mail, PlainTextContent, Subject, To
 
         self.maxDiff = None
         message = Mail(
@@ -336,7 +328,7 @@ class UnitTests(unittest.TestCase):
         self.assertEqual(message.get(), json.loads(response_content_with_all_three_mime_contents))
 
     def test_single_email_with_amp_and_html_contents_to_single_recipient(self):
-        from sendgrid.helpers.mail import Mail, From, To, Subject, HtmlContent, AmpHtmlContent
+        from sendgrid.helpers.mail import AmpHtmlContent, From, HtmlContent, Mail, Subject, To
 
         self.maxDiff = None
         message = Mail(
@@ -354,7 +346,7 @@ class UnitTests(unittest.TestCase):
         self.assertEqual(message.get(), json.loads(response_content))
 
     def test_single_email_with_amp_and_plain_contents_to_single_recipient(self):
-        from sendgrid.helpers.mail import Mail, From, To, Subject, PlainTextContent, AmpHtmlContent
+        from sendgrid.helpers.mail import AmpHtmlContent, From, Mail, PlainTextContent, Subject, To
 
         self.maxDiff = None
         message = Mail(
@@ -373,7 +365,7 @@ class UnitTests(unittest.TestCase):
 
     ## Check ordering of MIME types in different variants - start
     def test_single_email_with_all_three_contents_in_collapsed_order_of_plain_amp_html_content_single_recipient(self):
-        from sendgrid.helpers.mail import Mail, From, To, Subject, PlainTextContent, HtmlContent, AmpHtmlContent
+        from sendgrid.helpers.mail import AmpHtmlContent, From, HtmlContent, Mail, PlainTextContent, Subject, To
 
         self.maxDiff = None
         message = Mail(from_email=From("test+from@example.com", "Example From Name"), to_emails=To("test+to@example.com", "Example To Name"), subject=Subject("Sending with SendGrid is Fun"))
@@ -384,7 +376,7 @@ class UnitTests(unittest.TestCase):
         self.assertEqual(message.get(), json.loads(response_content_with_all_three_mime_contents))
 
     def test_single_email_with_all_three_contents_in_collapsed_order_of_plain_html_amp_content_single_recipient(self):
-        from sendgrid.helpers.mail import Mail, From, To, Subject, PlainTextContent, HtmlContent, AmpHtmlContent
+        from sendgrid.helpers.mail import AmpHtmlContent, From, HtmlContent, Mail, PlainTextContent, Subject, To
 
         self.maxDiff = None
         message = Mail(from_email=From("test+from@example.com", "Example From Name"), to_emails=To("test+to@example.com", "Example To Name"), subject=Subject("Sending with SendGrid is Fun"))
@@ -395,7 +387,7 @@ class UnitTests(unittest.TestCase):
         self.assertEqual(message.get(), json.loads(response_content_with_all_three_mime_contents))
 
     def test_single_email_with_all_three_contents_in_collapsed_order_of_html_plain_amp_content_single_recipient(self):
-        from sendgrid.helpers.mail import Mail, From, To, Subject, PlainTextContent, HtmlContent, AmpHtmlContent
+        from sendgrid.helpers.mail import AmpHtmlContent, From, HtmlContent, Mail, PlainTextContent, Subject, To
 
         self.maxDiff = None
         message = Mail(from_email=From("test+from@example.com", "Example From Name"), to_emails=To("test+to@example.com", "Example To Name"), subject=Subject("Sending with SendGrid is Fun"))
@@ -406,7 +398,7 @@ class UnitTests(unittest.TestCase):
         self.assertEqual(message.get(), json.loads(response_content_with_all_three_mime_contents))
 
     def test_single_email_with_all_three_contents_in_collapsed_order_of_html_amp_plain_content_single_recipient(self):
-        from sendgrid.helpers.mail import Mail, From, To, Subject, PlainTextContent, HtmlContent, AmpHtmlContent
+        from sendgrid.helpers.mail import AmpHtmlContent, From, HtmlContent, Mail, PlainTextContent, Subject, To
 
         self.maxDiff = None
         message = Mail(from_email=From("test+from@example.com", "Example From Name"), to_emails=To("test+to@example.com", "Example To Name"), subject=Subject("Sending with SendGrid is Fun"))
@@ -417,7 +409,7 @@ class UnitTests(unittest.TestCase):
         self.assertEqual(message.get(), json.loads(response_content_with_all_three_mime_contents))
 
     def test_single_email_with_all_three_contents_in_collapsed_order_of_amp_html_plain_content_single_recipient(self):
-        from sendgrid.helpers.mail import Mail, From, To, Subject, PlainTextContent, HtmlContent, AmpHtmlContent
+        from sendgrid.helpers.mail import AmpHtmlContent, From, HtmlContent, Mail, PlainTextContent, Subject, To
 
         self.maxDiff = None
         message = Mail(from_email=From("test+from@example.com", "Example From Name"), to_emails=To("test+to@example.com", "Example To Name"), subject=Subject("Sending with SendGrid is Fun"))
@@ -428,7 +420,7 @@ class UnitTests(unittest.TestCase):
         self.assertEqual(message.get(), json.loads(response_content_with_all_three_mime_contents))
 
     def test_single_email_with_all_three_contents_in_collapsed_order_of_amp_plain_html_content_single_recipient(self):
-        from sendgrid.helpers.mail import Mail, From, To, Subject, PlainTextContent, HtmlContent, AmpHtmlContent
+        from sendgrid.helpers.mail import AmpHtmlContent, From, HtmlContent, Mail, PlainTextContent, Subject, To
 
         self.maxDiff = None
         message = Mail(from_email=From("test+from@example.com", "Example From Name"), to_emails=To("test+to@example.com", "Example To Name"), subject=Subject("Sending with SendGrid is Fun"))
@@ -441,7 +433,7 @@ class UnitTests(unittest.TestCase):
     ## end
 
     def test_value_error_is_raised_on_to_emails_set_to_list_of_lists(self):
-        from sendgrid.helpers.mail import PlainTextContent, HtmlContent
+        from sendgrid.helpers.mail import HtmlContent, PlainTextContent
 
         self.maxDiff = None
         to_emails = [["test+to0@example.com", "Example To Name 0"], ["test+to1@example.com", "Example To Name 1"]]
@@ -450,7 +442,7 @@ class UnitTests(unittest.TestCase):
             Mail(from_email=From("test+from@example.com", "Example From Name"), to_emails=to_emails, subject=Subject("Sending with SendGrid is Fun"), plain_text_content=PlainTextContent("and easy to do anywhere, even with Python"), html_content=HtmlContent("<strong>and easy to do anywhere, even with Python</strong>"))
 
     def test_value_error_is_raised_on_to_emails_set_to_reply_to_list_of_strs(self):
-        from sendgrid.helpers.mail import PlainTextContent, HtmlContent
+        from sendgrid.helpers.mail import HtmlContent, PlainTextContent
 
         self.maxDiff = None
         to_emails = [("test+to0@example.com", "Example To Name 0"), ("test+to1@example.com", "Example To Name 1")]
@@ -462,7 +454,7 @@ class UnitTests(unittest.TestCase):
             mail.reply_to_list = ["test+reply_to0@example.com", "test+reply_to1@example.com"]
 
     def test_value_error_is_raised_on_to_emails_set_to_reply_to_list_of_tuples(self):
-        from sendgrid.helpers.mail import PlainTextContent, HtmlContent
+        from sendgrid.helpers.mail import HtmlContent, PlainTextContent
 
         self.maxDiff = None
         to_emails = [("test+to0@example.com", "Example To Name 0"), ("test+to1@example.com", "Example To Name 1")]
@@ -474,7 +466,7 @@ class UnitTests(unittest.TestCase):
             mail.reply_to_list = [("test+reply_to@example.com", "Test Name")]
 
     def test_error_is_not_raised_on_to_emails_set_to_list_of_tuples(self):
-        from sendgrid.helpers.mail import PlainTextContent, HtmlContent
+        from sendgrid.helpers.mail import HtmlContent, PlainTextContent
 
         self.maxDiff = None
         to_emails = [("test+to0@example.com", "Example To Name 0"), ("test+to1@example.com", "Example To Name 1")]
@@ -482,7 +474,7 @@ class UnitTests(unittest.TestCase):
         Mail(from_email=From("test+from@example.com", "Example From Name"), to_emails=to_emails, subject=Subject("Sending with SendGrid is Fun"), plain_text_content=PlainTextContent("and easy to do anywhere, even with Python"), html_content=HtmlContent("<strong>and easy to do anywhere, even with Python</strong>"))
 
     def test_error_is_not_raised_on_to_emails_set_to_list_of_strs(self):
-        from sendgrid.helpers.mail import PlainTextContent, HtmlContent
+        from sendgrid.helpers.mail import HtmlContent, PlainTextContent
 
         self.maxDiff = None
         to_emails = ["test+to0@example.com", "test+to1@example.com"]
@@ -490,7 +482,7 @@ class UnitTests(unittest.TestCase):
         Mail(from_email=From("test+from@example.com", "Example From Name"), to_emails=to_emails, subject=Subject("Sending with SendGrid is Fun"), plain_text_content=PlainTextContent("and easy to do anywhere, even with Python"), html_content=HtmlContent("<strong>and easy to do anywhere, even with Python</strong>"))
 
     def test_error_is_not_raised_on_to_emails_set_to_a_str(self):
-        from sendgrid.helpers.mail import PlainTextContent, HtmlContent
+        from sendgrid.helpers.mail import HtmlContent, PlainTextContent
 
         self.maxDiff = None
         to_emails = "test+to0@example.com"
@@ -498,7 +490,7 @@ class UnitTests(unittest.TestCase):
         Mail(from_email=From("test+from@example.com", "Example From Name"), to_emails=to_emails, subject=Subject("Sending with SendGrid is Fun"), plain_text_content=PlainTextContent("and easy to do anywhere, even with Python"), html_content=HtmlContent("<strong>and easy to do anywhere, even with Python</strong>"))
 
     def test_error_is_not_raised_on_to_emails_set_to_a_tuple(self):
-        from sendgrid.helpers.mail import PlainTextContent, HtmlContent
+        from sendgrid.helpers.mail import HtmlContent, PlainTextContent
 
         self.maxDiff = None
         to_emails = ("test+to0@example.com", "Example To Name 0")
@@ -506,7 +498,7 @@ class UnitTests(unittest.TestCase):
         Mail(from_email=From("test+from@example.com", "Example From Name"), to_emails=to_emails, subject=Subject("Sending with SendGrid is Fun"), plain_text_content=PlainTextContent("and easy to do anywhere, even with Python"), html_content=HtmlContent("<strong>and easy to do anywhere, even with Python</strong>"))
 
     def test_error_is_not_raised_on_to_emails_includes_bcc_cc(self):
-        from sendgrid.helpers.mail import PlainTextContent, HtmlContent
+        from sendgrid.helpers.mail import HtmlContent, PlainTextContent
 
         self.maxDiff = None
         to_emails = [To("test+to0@example.com", "Example To Name 0"), Bcc("test+bcc@example.com", "Example Bcc Name 1"), Cc("test+cc@example.com", "Example Cc Name 2")]
@@ -792,61 +784,61 @@ class UnitTests(unittest.TestCase):
 
     def test_kitchen_sink(self):
         from sendgrid.helpers.mail import (
-            Mail,
-            From,
-            To,
-            Cc,
-            Bcc,
-            Subject,
-            Substitution,
-            Header,
-            CustomArg,
-            SendAt,
-            Content,
-            MimeType,
-            Attachment,
-            FileName,
-            FileContent,
-            FileType,
-            Disposition,
-            ContentId,
-            TemplateId,
-            Section,
-            ReplyTo,
-            Category,
-            BatchId,
             Asm,
-            GroupId,
-            GroupsToDisplay,
-            IpPoolName,
-            MailSettings,
+            Attachment,
+            BatchId,
+            Bcc,
             BccSettings,
             BccSettingsEmail,
             BypassBounceManagement,
             BypassListManagement,
             BypassSpamManagement,
             BypassUnsubscribeManagement,
+            Category,
+            Cc,
+            ClickTracking,
+            Content,
+            ContentId,
+            CustomArg,
+            Disposition,
+            FileContent,
+            FileName,
+            FileType,
+            FooterHtml,
             FooterSettings,
             FooterText,
-            FooterHtml,
+            From,
+            Ganalytics,
+            GroupId,
+            GroupsToDisplay,
+            Header,
+            IpPoolName,
+            Mail,
+            MailSettings,
+            MimeType,
+            OpenTracking,
+            OpenTrackingSubstitutionTag,
+            ReplyTo,
             SandBoxMode,
+            Section,
+            SendAt,
             SpamCheck,
             SpamThreshold,
             SpamUrl,
-            TrackingSettings,
-            ClickTracking,
-            SubscriptionTracking,
-            SubscriptionText,
+            Subject,
             SubscriptionHtml,
             SubscriptionSubstitutionTag,
-            OpenTracking,
-            OpenTrackingSubstitutionTag,
-            Ganalytics,
-            UtmSource,
-            UtmMedium,
-            UtmTerm,
-            UtmContent,
+            SubscriptionText,
+            SubscriptionTracking,
+            Substitution,
+            TemplateId,
+            To,
+            TrackingSettings,
             UtmCampaign,
+            UtmContent,
+            UtmMedium,
+            UtmSource,
+            UtmTerm,
         )
 
         self.maxDiff = None
@@ -1244,7 +1236,7 @@ class UnitTests(unittest.TestCase):
 
     # Send a Single Email to a Single Recipient with a Dynamic Template
     def test_single_email_to_a_single_recipient_with_dynamic_templates(self):
-        from sendgrid.helpers.mail import Mail, From, To, Subject, PlainTextContent, HtmlContent
+        from sendgrid.helpers.mail import From, HtmlContent, Mail, PlainTextContent, Subject, To
 
         self.maxDiff = None
         message = Mail(
@@ -1363,7 +1355,7 @@ class UnitTests(unittest.TestCase):
             self.fail("Should have failed as SendGrid API key included")
 
     def test_unicode_values_in_substitutions_helper(self):
-        from sendgrid.helpers.mail import Mail, From, To, Subject, PlainTextContent, HtmlContent
+        from sendgrid.helpers.mail import From, HtmlContent, Mail, PlainTextContent, Subject, To
 
         self.maxDiff = None
         message = Mail(
@@ -1420,7 +1412,7 @@ class UnitTests(unittest.TestCase):
         self.assertEqual(tracking_settings.get(), {"click_tracking": {"enable": False, "enable_text": False}})
 
     def test_bypass_list_management(self):
-        from sendgrid.helpers.mail import MailSettings, BypassListManagement
+        from sendgrid.helpers.mail import BypassListManagement, MailSettings
 
         mail_settings = MailSettings()
         mail_settings.bypass_list_management = BypassListManagement(True)
@@ -1433,7 +1425,7 @@ class UnitTests(unittest.TestCase):
         )
 
     def test_v3_bypass_filters(self):
-        from sendgrid.helpers.mail import MailSettings, BypassBounceManagement, BypassSpamManagement, BypassUnsubscribeManagement
+        from sendgrid.helpers.mail import BypassBounceManagement, BypassSpamManagement, BypassUnsubscribeManagement, MailSettings
 
         mail_settings = MailSettings()
         mail_settings.bypass_bounce_management = BypassBounceManagement(True)

@@ -2,20 +2,12 @@
 
 See README.txt for usage instructions."""
 
-try:
-    from config import Config
-except:
-    # Python 3+, Travis
-    from sendgrid.helpers.inbound.config import Config
-
-try:
-    from parse import Parse
-except:
-    # Python 3+, Travis
-    from sendgrid.helpers.inbound.parse import Parse
-
-from flask import Flask, request, render_template
 import os
+
+from flask import Flask, render_template, request
+
+from sendgrid.helpers.inbound.config import Config
+from sendgrid.helpers.inbound.parse import Parse
 
 app = Flask(__name__)
 config = Config()

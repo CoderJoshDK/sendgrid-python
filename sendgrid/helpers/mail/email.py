@@ -1,13 +1,4 @@
-try:
-    import rfc822
-except ImportError:
-    import email.utils as rfc822
-
-try:
-    basestring = basestring
-except NameError:
-    # Define basestring when Python >= 3.0
-    basestring = str
+import email.utils as rfc822
 
 
 class Email(object):
@@ -68,7 +59,7 @@ class Email(object):
         :param value: Name associated with this email.
         :type value: string
         """
-        if not (value is None or isinstance(value, basestring)):
+        if not (value is None or isinstance(value, str)):
             raise TypeError("name must be of type string.")
 
         self._name = value

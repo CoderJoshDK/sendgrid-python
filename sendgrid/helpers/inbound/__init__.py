@@ -9,5 +9,5 @@ See README.txt for detailed usage instructions, including quick-start guides
 for local testing and Heroku deployment.
 """
 
-from .config import *  # noqa
-from .parse import *  # noqa
+from .config import *  # noqa: F403
+from .parse import *  # noqa: F403

@@ -1,9 +1,11 @@
+import base64
+
 from cryptography.exceptions import InvalidSignature
 from cryptography.hazmat.primitives import hashes
 from cryptography.hazmat.primitives.asymmetric import ec
 from cryptography.hazmat.primitives.serialization import load_pem_public_key
-import base64
-from .eventwebhook_header import EventWebhookHeader
+
+from .eventwebhook_header import EventWebhookHeader as EventWebhookHeader
 
 
 class EventWebhook:

@@ -1,6 +1,6 @@
-import sendgrid
 import os
 
+import sendgrid
 
 sg = sendgrid.SendGridAPIClient(os.environ.get("SENDGRID_API_KEY"))
 

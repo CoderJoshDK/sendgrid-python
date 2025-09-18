@@ -1,1 +1,1 @@
-from .stats import *  # noqa
+from .stats import *  # noqa: F403

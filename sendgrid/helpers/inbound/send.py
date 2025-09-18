@@ -5,12 +5,9 @@ import argparse
 import sys
 from io import open
 
-try:
-    from config import Config
-except ImportError:
-    # Python 3+, Travis
-    from sendgrid.helpers.inbound.config import Config
 from python_http_client import Client
+
+from sendgrid.helpers.inbound.config import Config
 
 
 class Send(object):

@@ -45,7 +45,7 @@ Changelog = "https://github.com/sendgrid/sendgrid-python/blob/main/CHANGELOG.md"
 line-length = 320
 
 [tool.ruff.lint]
-select = ["E722", "F40", "F841"]
+select = ["E722", "F40", "F841", "I"]
 
 [build-system]
 requires = ["uv_build>=0.8.18,<0.9.0"]

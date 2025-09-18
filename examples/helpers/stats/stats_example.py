@@ -1,7 +1,8 @@
 import json
 import os
-from sendgrid.helpers.stats import *
+
 from sendgrid import *
+from sendgrid.helpers.stats import *
 
 # NOTE: you will need to move this file to the root directory of this project to execute properly.
 

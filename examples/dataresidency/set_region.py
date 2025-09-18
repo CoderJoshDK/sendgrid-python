@@ -1,7 +1,7 @@
-import sendgrid
 import os
 
-from sendgrid import Email, To, Content, Mail
+import sendgrid
+from sendgrid import Content, Email, Mail, To
 
 # Example 1
 # setting region to be "global"

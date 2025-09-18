@@ -1,8 +1,8 @@
-from .file_content import FileContent
-from .file_type import FileType
-from .file_name import FileName
-from .disposition import Disposition
 from .content_id import ContentId
+from .disposition import Disposition
+from .file_content import FileContent
+from .file_name import FileName
+from .file_type import FileType
 
 
 class Attachment(object):

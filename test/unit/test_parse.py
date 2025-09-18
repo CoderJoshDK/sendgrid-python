@@ -1,7 +1,7 @@
 import unittest
 
-from sendgrid.helpers.inbound.config import Config
 from sendgrid.helpers.inbound.app import app
+from sendgrid.helpers.inbound.config import Config
 
 
 class UnitTests(unittest.TestCase):

@@ -1,12 +1,8 @@
 import argparse
 import unittest
+import unittest.mock as mock
 
 from sendgrid.helpers.inbound import send
-
-try:
-    import unittest.mock as mock
-except ImportError:
-    import mock
 
 
 class UnitTests(unittest.TestCase):
