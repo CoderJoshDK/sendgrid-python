@@ -1,0 +1,56 @@
+[project]
+name = "sendgrid"
+version = "6.12.4"
+description = "Twilio SendGrid library for Python"
+readme = "README.rst"
+license = "MIT"
+requires-python = ">=3.9"
+authors = [
+  { name = "Elmer Thomas", email = "help@twilio.com" },
+  { name = "Yamil Asusta", email = "help@twilio.com" },
+]
+dependencies = [
+  "python_http_client>=3.2.1",
+  "cryptography>=44.0.1",
+  "werkzeug>=3.0.6",
+]
+
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3.9",
+  "Programming Language :: Python :: 3.10",
+  "Programming Language :: Python :: 3.11",
+  "Programming Language :: Python :: 3.12",
+  "Programming Language :: Python :: 3.13",
+]
+
+[dependency-groups]
+dev = ["ruff>=0.13.0"]
+test = [
+  "cryptography>=44.0.1",
+  "flask==3.1.0",
+  "more-itertools==5.0.0",
+  "python-http-client>=3.2.1",
+  "pyyaml>=4.2b1",
+  "six==1.17.0",
+  "tox-uv>=1.28.0",
+]
+
+[project.urls]
+Homepage = "https://sendgrid.com"
+Repository = "https://github.com/sendgrid/sendgrid-python/"
+Changelog = "https://github.com/sendgrid/sendgrid-python/blob/main/CHANGELOG.md"
+
+[tool.ruff]
+line-length = 320
+
+[tool.ruff.lint]
+select = ["E722", "F40", "F841"]
+
+[build-system]
+requires = ["uv_build>=0.8.18,<0.9.0"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+module-name = "sendgrid"
+module-root = ""
